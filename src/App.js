@@ -87,42 +87,42 @@ function App() {
 
     //[1]
     // get the imageData from original frame
-    // let humanFrame = onlyHumanCamRef.current;
-    // let humanFrame_ctx = humanFrame.getContext("2d");
-    // humanFrame.width = c_width;
-    // humanFrame.height = c_height;
-    // humanFrame_ctx.drawImage(video,0,0,c_width,c_height);
+    let humanFrame = onlyHumanCamRef.current;
+    let humanFrame_ctx = humanFrame.getContext("2d");
+    humanFrame.width = c_width;
+    humanFrame.height = c_height;
+    humanFrame_ctx.drawImage(video,0,0,c_width,c_height);
 
-    // let backgroundFrame = onlyBackgroundCamRef.current;
-    // let backgroundFrame_ctx = backgroundFrame.getContext("2d");
-    // backgroundFrame.width = c_width;
-    // backgroundFrame.height = c_height;
-    // backgroundFrame_ctx.drawImage(video,0,0,c_width,c_height);
+    let backgroundFrame = onlyBackgroundCamRef.current;
+    let backgroundFrame_ctx = backgroundFrame.getContext("2d");
+    backgroundFrame.width = c_width;
+    backgroundFrame.height = c_height;
+    backgroundFrame_ctx.drawImage(video,0,0,c_width,c_height);
 
-    // let humanImageData = humanFrame_ctx.getImageData(0,0,c_width,c_height);
-    // let backgroundImageData = backgroundFrame_ctx.getImageData(0,0,c_width,c_height);
+    let humanImageData = humanFrame_ctx.getImageData(0,0,c_width,c_height);
+    let backgroundImageData = backgroundFrame_ctx.getImageData(0,0,c_width,c_height);
 
     //manipulate the pixels (only human/background)
     var pixels = personSegment.data;
 
-    // for (var i=0;i<pixels.length;i++) {
-    //   if (pixels[i] === 1) {
-    //     backgroundImageData.data[i*4] = 100;
-    //     backgroundImageData.data[i*4+1] = 100;
-    //     backgroundImageData.data[i*4+2] = 100;
-    //     backgroundImageData.data[i*4+3] = 0;
-    //   }
-    //   if (pixels[i]===0) {
-    //     humanImageData.data[i*4] = 100;
-    //     humanImageData.data[i*4+1] = 100;
-    //     humanImageData.data[i*4+2] = 100;
-    //     humanImageData.data[i*4+3] = 0;
-    //   }
-    // }
+    for (var i=0;i<pixels.length;i++) {
+      if (pixels[i] === 1) {
+        backgroundImageData.data[i*4] = 100;
+        backgroundImageData.data[i*4+1] = 100;
+        backgroundImageData.data[i*4+2] = 100;
+        backgroundImageData.data[i*4+3] = 0;
+      }
+      if (pixels[i]===0) {
+        humanImageData.data[i*4] = 100;
+        humanImageData.data[i*4+1] = 100;
+        humanImageData.data[i*4+2] = 100;
+        humanImageData.data[i*4+3] = 0;
+      }
+    }
 
-    // bodyPix.drawMask(onlyBackgroundCamRef.current,video,backgroundImageData,0,0,c_width,c_height);
-    // humanFrame_ctx.putImageData(humanImageData,0,0);
-    // backgroundFrame_ctx.putImageData(backgroundImageData,0,0);
+    bodyPix.drawMask(onlyBackgroundCamRef.current,video,backgroundImageData,0,0,c_width,c_height);
+    humanFrame_ctx.putImageData(humanImageData,0,0);
+    backgroundFrame_ctx.putImageData(backgroundImageData,0,0);
   }
 
     //masking complete; now trying to replace with other background
@@ -172,7 +172,7 @@ function App() {
             width:320,
             height:240
         }} />
-        {/* <h1>Only Human Webcam</h1>
+        <h1>Only Human Webcam</h1>
         <canvas ref={onlyHumanCamRef} 
           style = {{
             marginLeft: "auto",
@@ -207,7 +207,7 @@ function App() {
             zIndex:9,
             width:320,
             height:240
-        }} /> */}
+        }} />
 
       </header>
     </div>
